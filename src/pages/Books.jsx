@@ -12,6 +12,7 @@ import './css/books.css';
 export const Books = () => {
 	const { editBook, deleteBook, books, fetchBooksFromLocalStorage, getBookData } = useContext(AppContext);
 
+	// Call function to fetch books from localStorage
     useEffect(() => {
         fetchBooksFromLocalStorage();
     }, [])

@@ -26,6 +26,7 @@ export const AppContextProvider = ({ children }) => {
 
     const navigate = useNavigate();
 
+    // Add book data to form when editing
     useEffect(() => {
         if(bookEdit.edit) {
             setFormData({
@@ -37,17 +38,7 @@ export const AppContextProvider = ({ children }) => {
         }
     }, [bookEdit])
 
-    const getBookData = (id) => {
-        books.forEach(item => {
-            if(item.id === id) {
-                // Store book data in state
-                setBookData(item)
-                // Store book data in localStorage
-                localStorage.setItem('book', JSON.stringify(item))
-            }
-        })
-    }
-
+    // Fetch Book Data from localStorage Function
     const fetchBookFromLocalStorage = () => {
         // Fetch book data from localStorage
         const bookFromLocalStorage = localStorage.getItem('book');
@@ -56,6 +47,8 @@ export const AppContextProvider = ({ children }) => {
             setBookData(JSON.parse(bookFromLocalStorage))
         }
     }
+
+    // Fetch Books data from localStorage Function
     const fetchBooksFromLocalStorage = () => {
         // Fetch books from localStorage
         const booksFromLocalStorage = localStorage.getItem('books');
@@ -65,6 +58,8 @@ export const AppContextProvider = ({ children }) => {
             setBooks(JSON.parse(booksFromLocalStorage));
         }
     }
+
+    // Update Book Function
     const updateBook = (id, updateItem) => {
         const newArr = books.map(book => {
             if(book.id === id) {
@@ -86,9 +81,9 @@ export const AppContextProvider = ({ children }) => {
             item: {},
             edit: false
         })
-        
     }
 
+    // Add Book Function
     const addBook = (e) => {
         e.preventDefault();
 
@@ -118,6 +113,7 @@ export const AppContextProvider = ({ children }) => {
         })
     } 
 
+    // Handle Change Function
     const handleChange = (e) => {
         setFormData(prevState => ({
             ...prevState,
@@ -125,6 +121,19 @@ export const AppContextProvider = ({ children }) => {
         }))
     }
 
+    // Get Book data function
+    const getBookData = (id) => {
+        books.forEach(item => {
+            if(item.id === id) {
+                // Store book data in state
+                setBookData(item)
+                // Store book data in localStorage
+                localStorage.setItem('book', JSON.stringify(item))
+            }
+        })
+    }
+
+    // Edit Book Function
     const editBook = (item) => {
         setBookEdit({
             item,
@@ -134,11 +143,15 @@ export const AppContextProvider = ({ children }) => {
         navigate('/')
     }
 
+    // Delete Book Function
 	const deleteBook = (id) => {
+        // Delete book from array
 		const newArr = books.filter((book, index) => index !== id);
 
+        // Update state with deleted book array
 		setBooks(newArr);
 
+        // Delete book from localStorage
 		localStorage.setItem('books', JSON.stringify(newArr));
 	};
 

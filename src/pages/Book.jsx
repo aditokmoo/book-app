@@ -8,6 +8,7 @@ export const Book = () => {
 
     const { id, book, author, category, desc } = bookData;
 
+	// Call function to fetch book from localStorage
 	useEffect(() => {
 		fetchBookFromLocalStorage();
 	}, []);
